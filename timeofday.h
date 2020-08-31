@@ -1,6 +1,7 @@
-// timeofday.h  UNFINISHED
+// timeofday.h
 // Glenn G. Chappell
-// 2020-08-28
+// Started: 2020-08-28
+// Updated: 2020-08-31
 //
 // For CS 311 Fall 2020
 // Header for class TimeOfDay
@@ -19,6 +20,8 @@
 
 // class TimeOfDay
 // Time of day: hours, minutes, seconds.
+// Invariants:
+//   0 <= _secs < 24*60*60.
 class TimeOfDay {
 
 // ***** TimeOfDay: Ctors, dctor, op= *****
@@ -26,16 +29,25 @@ public:
 
     // Default ctor
     // Set time to midnight.
-    TimeOfDay() = default;  // WE PROBABLY NEED TO WRITE THIS!!!
+    TimeOfDay()
+    {
+        setTime(0, 0, 0);
+    }
 
     // Ctor from hours, minutes, seconds
     // Set time to given # of hours, minutes, seconds past midnight.
     // Extreme values of hh, mm, ss are corrected by shifting some whole
     // number of days forward or backward.
+    // Pre:
+    //   0 <= hh < 24
+    //   0 <= mm < 60
+    //   0 <= ss < 60
     TimeOfDay(int hh,
               int mm,
               int ss)
-    {}  // WRITE THIS!!!
+    {
+        setTime(hh, mm, ss);
+    }
 
     // Big 5: use automatically generated versions
     ~TimeOfDay() = default;
@@ -50,22 +62,40 @@ public:
     // op++ [pre]
     // Move time one second forward.
     TimeOfDay & operator++()
-    {}  // WRITE THIS!!!
+    {
+        ++_secs;
+        if (_secs == 24*60*60)
+            _secs = 0;
+        return *this;
+    }
 
     // op++ [post]
     // Move time one second forward.
-    TimeOfDay operator++(int dummy)
-    {}  // WRITE THIS!!!
+    TimeOfDay operator++([[maybe_unused]] int dummy)
+    {
+        auto save = *this;
+        ++(*this);
+        return save;
+    }
 
     // op-- [pre]
     // Move time one second backward.
     TimeOfDay & operator--()
-    {}  // WRITE THIS!!!
+    {
+        --_secs;
+        if (_secs == -1)
+            _secs = 24*60*60-1;
+        return *this;
+    }
 
     // op-- [post]
     // Move time one second backward.
-    TimeOfDay operator--(int dummy)
-    {}  // WRITE THIS!!!
+    TimeOfDay operator--([[maybe_unused]] int dummy)
+    {
+        auto save = *this;
+        --(*this);
+        return save;
+    }
 
 // ***** TimeOfDay: General public functions *****
 public:
@@ -74,17 +104,24 @@ public:
     // Return hours, minutes, seconds in reference parameters.
     void getTime(int & hh,
                  int & mm,
-                 int & ss) const
-    {}  // WRITE THIS!!!
+                 int & ss) const;
 
     // setTime
     // Set time to given # of hours, minutes, seconds past midnight.
     // Extreme values of hh, mm, ss are corrected by shifting some whole
     // number of days forward or backward.
+    // Pre:
+    //   0 <= hh < 24
+    //   0 <= mm < 60
+    //   0 <= ss < 60
     void setTime(int hh,
                  int mm,
-                 int ss)
-    {}  // WRITE THIS!!!
+                 int ss);
+
+// ***** TimeOfDay: Data members *****
+private:
+
+    int _secs;  // Seconds past midnight (range 0 .. 24*60*60-1)
 
 };  // End class TimeOfDay
 
