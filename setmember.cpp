@@ -4,7 +4,7 @@
 //
 // For CS 311 Fall 2020
 // See how class members are initialized
- 
+
 #include <iostream>
 using std::cout;
 using std::endl;
