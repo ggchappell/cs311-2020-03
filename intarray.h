@@ -1,6 +1,7 @@
-// intarray.h  UNFINISHED
+// intarray.h
 // Glenn G. Chappell
-// 2020-09-02
+// Started: 2020-09-02
+// Updated: 2020-09-04
 //
 // For CS 311 Fall 2020
 // Header for class IntArray
@@ -21,6 +22,10 @@
 // class IntArray
 // Simple RAII class holding dynamic array of int.
 // A const IntArray does not allow modification of its array items.
+// Invariants:
+//     _arrayptr points to memory allocated with new[], owned by *this,
+//      large enough to hold "size" value-type objects, where size is
+//      the parameter passed to the ctor.
 class IntArray {
 
 // ***** IntArray: Types *****
@@ -35,10 +40,11 @@ public:
 
     // Ctor from size
     // Not an implicit type conversion.
-    IntArray(size_type size)
-    {
-        _arrayptr = new value_type[size];
-    }
+    // Pre:
+    //     size >= 0.
+    explicit IntArray(size_type size)
+        :_arrayptr(new value_type[size])
+    {}
 
     // Dctor
     ~IntArray()
@@ -46,10 +52,19 @@ public:
         delete [] _arrayptr;
     }
 
+    // No default ctor, copy/move ops
+    IntArray() = delete;
+    IntArray(const IntArray & other) = delete;
+    IntArray(IntArray && other) = delete;
+    IntArray & operator=(const IntArray & other) = delete;
+    IntArray & operator=(IntArray && other) = delete;
+
 // ***** IntArray: General public operators *****
 public:
 
     // op[] - non-const & const
+    // Pre:
+    //     0 <= index < (specified size of array).
     value_type & operator[](size_type index)
     {
         return _arrayptr[index];
