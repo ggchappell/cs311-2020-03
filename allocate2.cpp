@@ -1,4 +1,4 @@
-// allocate2.cpp  UNFINISHED
+// allocate2.cpp
 // Glenn G. Chappell
 // 2020-09-11
 //
@@ -43,7 +43,7 @@ public:
 
         //if (_name == "Object A") throw std::bad_alloc();
         //if (_name == "Object B") throw std::bad_alloc();
-        if (_name == "Object C") throw std::bad_alloc();
+        //if (_name == "Object C") throw std::bad_alloc();
 
         // NOTE: In practice, we ***never*** do throws like those above;
         // "new" does them. These are fake throws, to see what would
@@ -84,7 +84,9 @@ private:
 // May throw std::bad_alloc.
 void allocate1(Named * & nptra)
 {
-    // TODO: WRITE THIS!!!
+    nptra = new Named("Object A");
+    // If the allocation fails, the "new" throws, and we
+    // leave. No clean-up necessary.
 }
 
 
@@ -103,7 +105,21 @@ void allocate1(Named * & nptra)
 void allocate2(Named * & nptrb,
                Named * & nptrc)
 {
-    // TODO: WRITE THIS!!!
+    nptrb = new Named("Object B");
+    // If the 1st allocation fails, then the "new" throws, and we leave.
+    // No clean-up necessary.
+
+    try
+    {
+        nptrc = new Named("Object C");
+        // If the 2nd allocation fails, then we need to clean up the
+        // first.
+    }
+    catch (...)
+    {
+        delete nptrb;
+        throw;  // We cannot handle the exception here; re-throw it
+    }
 }
 
 
