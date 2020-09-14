@@ -1,4 +1,4 @@
-// use_list.cpp  UNFINISHED
+// use_list.cpp
 // Glenn G. Chappell
 // 2020-09-14
 //
@@ -35,7 +35,14 @@ void userPause()
 template <typename ValType>
 size_t size(LLNode<ValType> * head)
 {
-    return size_t(42);  // DUMMY; WRITE THIS!!!
+    auto p = head;       // Iterates through list
+    size_t counter = 0;  // Number of nodes so far
+    while (p != nullptr)
+    {
+        ++counter;
+        p = p->_next;
+    }
+    return counter;
 }
 
 
