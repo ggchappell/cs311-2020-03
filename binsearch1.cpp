@@ -1,10 +1,10 @@
-// binsearch1.cpp  UNFINISHED
+// binsearch1.cpp
 // Glenn G. Chappell
 // 2020-09-16
 //
 // For CS 311 Fall 2020
 // Binary Search
-// Implementation #1: Recursive
+// Implementation #1: recursive
 
 #include <iostream>
 using std::cout;
@@ -31,15 +31,41 @@ using std::end;
 // if findme was found (using equality) in range, false otherwise.
 // Recursive.
 // Requirements on types:
-//     ???
+//     RAIter is a random-access iterator type.
+//     ValueType is the value type of RAIter.
+//     ValueType has a public operator<, operator==, copy ctor, dctor.
+//     operator< is a total order on ValueType.
 // Pre:
-//     ???
+//     [first, last) is a valid range.
+//     Values in the range are sorted by < (ascending).
+// Throws what & when a ValueType operation (op<, op==, copy ctor,
+// dctor) throws. If no ValueType operation throws, then binSearch does
+// not throw.
 template <typename RAIter, typename ValueType>
 bool binSearch(RAIter first,      // [first, last) is range to search
                RAIter last,
                ValueType findme)  // value to find
 {
-    return false;  // DUMMY; WRITE THIS!!!
+    // BASE CASE
+
+    if (last == first)      // Range has size 0
+        return false;
+    if (last == first + 1)  // Range has size 1
+        return *first == findme;
+
+    // RECURSIVE CASE
+
+    // Get iterator to pivot: item in middle position of range
+    auto pivotiter = first + (last - first)/2;
+
+    if (findme < *pivotiter)
+    {   // Recursively search first half of range
+        return binSearch(first, pivotiter, findme);
+    }
+    else
+    {   // Recursively search second half of range
+        return binSearch(pivotiter, last, findme);
+    }
 }
 
 
