@@ -1,4 +1,4 @@
-// nqueen.cpp  UNFINISHED
+// nqueen.cpp
 // Glenn G. Chappell
 // 2020-09-23
 //
@@ -17,6 +17,8 @@ using std::string;
 using std::getline;
 #include <sstream>
 using std::istringstream;
+#include <cstdlib>
+using std::abs;
 
 
 using BoardType = vector<int>;  // Holds queen locs on a chessboard
@@ -81,6 +83,48 @@ void printBoard(const BoardType & board,
 }
 
 
+// checkQueen
+// Given a partial solution to the n-Queens Problem (see above),
+// determine whether a proposed new queen placement on the next row is
+// acceptable, that is, if it cannot attack any any of the existing
+// queens. If there is no possible attack, then the return value is
+// true.
+// Pre:
+//     board represents a placement of non-attacking queens on an n x n
+//      chessboard (see above).
+//     board.size() < n.
+//     0 <= newcol < n.
+bool checkQueen(const BoardType & board,
+                [[maybe_unused]] int n,
+                int newcol)
+{
+    int newrow = int(board.size());
+
+    // Iterate through existing queens
+    for (int oldrow = 0; oldrow < int(board.size()); ++oldrow)
+    {
+        int oldcol = board[oldrow];
+
+        // Existing queen: oldrow, oldcol
+        // Proposed new queen: newrow, newcol
+        // Determine whether new queen can attack old queen
+
+        // Vertical attack (same column)?
+        if (newcol == oldcol)
+            return false;
+
+        // Diagonal attack?
+        if (abs(newrow-oldrow) == abs(newcol-oldcol))
+            return false;
+
+        // NOTE. We do not need to check for horizontal attack (same
+        //  row) because of the assumption that there is at most one
+        //  queen in each row.
+    }
+    return true;
+}
+
+
 // nQueen_recurse
 // Given a partial solution to the n-Queens Problem (see above), print
 // out all non-attacking placements of n queens that include the given
@@ -92,11 +136,33 @@ void printBoard(const BoardType & board,
 //     Each entry of board is in [0 .. n-1].
 //     board represents a placement of non-attacking queens on an n x n
 //      chessboard (see above).
-void nQueen_recurse(BoardType board,
+void nQueen_recurse(BoardType & board,
                     int n)
+// NOTE. We can pass board by reference since the function always
+//  restores it to the same state it was in when the function was
+//  called.
 {
-    cout << "Function nQueen_recurse not written!" << endl;  // DUMMY
-    // WRITE THIS!!!
+    // BASE CASE
+    if (n == int(board.size()))
+    {
+        // A full solution! Print it.
+        printBoard(board, n);
+        return;
+    }
+
+    // RECURSIVE CASE
+    // Try each position in next row
+    for (int newcol = 0; newcol < n; ++newcol)
+    {
+        // If we can add a queen in position newcol in the next row ...
+        if (checkQueen(board, n, newcol))
+        {
+            // ... then do it, and recurse.
+            board.push_back(newcol);   // Add new queen
+            nQueen_recurse(board, n);  // Recursive call
+            board.pop_back();          // Remove new queen
+        }
+    }
 }
 
 
