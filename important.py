@@ -5,6 +5,7 @@
 #
 # For CS 311 Fall 2020
 """Print the sum from Analysis of Algorithms
+Illustrates the most important part of a formula
 Requires Python 3.x."""
 
 import math  # for .log
