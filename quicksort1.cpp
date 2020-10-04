@@ -17,8 +17,9 @@ using std::to_string;
 using std::vector;
 #include <cstddef>
 using std::size_t;
-#include <algorithm>
+#include <utility>
 using std::swap;
+#include <algorithm>
 using std::iter_swap;
 #include <iterator>
 using std::begin;
