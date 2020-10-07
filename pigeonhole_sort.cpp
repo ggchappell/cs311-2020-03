@@ -3,7 +3,7 @@
 // 2020-10-05
 //
 // For CS 311 Fall 2020
-// Pigeonhole Sort for 4-digit numbers
+// Pigeonhole Sort for 3-digit numbers
 
 #include <iostream>
 using std::cout;
@@ -32,25 +32,25 @@ using std::distance;
 const size_t BIGSIZE = 100'000'000;
 
 // Values in datasets range from 0 to MAXVAL
-const int MAXVAL = 9'999;
+const int MAXVAL = 999;
 
 
 // pigeonholeSort
-// Sorts a sequence of 4-digit nonnegative ints, using Pigeonhole Sort.
+// Sorts a sequence of 3-digit nonnegative ints, using Pigeonhole Sort.
 // Requirements on Types:
 //     FDIter must be a forward iterator type.
 //     FDIter must have value type int.
 // Pre:
 //     [first, last) is a valid range.
-//     Each item in [first, last) is 0..9'999 (nonnegative, 4-digit)
+//     Each item in [first, last) is 0..999 (nonnegative, 3-digit)
 template <typename FDIter>
 void pigeonholeSort(FDIter first, FDIter last)
 {
     // Setup buckets
-    const int NUM_BUCKETS = 10000;  // Keys for Pigeonhole Sort:
-                                    //  0 .. NUM_BUCKETS-1
+    const int NUM_BUCKETS = 1000;  // Keys for Pigeonhole Sort:
+                                   //  0 .. NUM_BUCKETS-1
     vector<vector<int>> buckets(NUM_BUCKETS);
-                                 // Vector of buckets
+                                   // Vector of buckets
     size_t size = distance(first, last);
     for (auto & b : buckets)
     {
