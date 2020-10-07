@@ -1,4 +1,4 @@
-// pigeonhole_sort.cpp  UNFINISHED
+// pigeonhole_sort.cpp
 // Glenn G. Chappell
 // 2020-10-05
 //
@@ -18,6 +18,8 @@ using std::vector;
 using std::size_t;
 #include <utility>
 using std::swap;
+#include <algorithm>
+using std::move;
 #include <iterator>
 using std::begin;
 using std::end;
@@ -44,7 +46,30 @@ const int MAXVAL = 9'999;
 template <typename FDIter>
 void pigeonholeSort(FDIter first, FDIter last)
 {
-    // WRITE THIS!!!
+    // Setup buckets
+    const int NUM_BUCKETS = 10000;  // Keys for Pigeonhole Sort:
+                                    //  0 .. NUM_BUCKETS-1
+    vector<vector<int>> buckets(NUM_BUCKETS);
+                                 // Vector of buckets
+    size_t size = distance(first, last);
+    for (auto & b : buckets)
+    {
+        b.reserve(size);
+    }
+
+    // Place each item in the appropriate bucket (stable!)
+    for (auto it = first; it != last; ++it)
+    {
+        int key = *it;
+        buckets[key].push_back(key);
+    }
+
+    // Move each bucket back to original list, one after the other
+    auto movespot = first;
+    for (auto & b : buckets)  // Non-const so we can move
+    {
+        movespot = move(begin(b), end(b), movespot);
+    }
 }
 
 
