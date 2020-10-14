@@ -1,4 +1,5 @@
 // fsarray.cpp  UNFINISHED
+// VERSION 2
 // Glenn G. Chappell
 // 2020-10-14
 //
