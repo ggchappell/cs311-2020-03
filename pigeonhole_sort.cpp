@@ -33,6 +33,8 @@ const size_t BIGSIZE = 100'000'000;
 
 // Values in datasets range from 0 to MAXVAL
 const int MAXVAL = 999;
+// *** If MAXVAL is increased, then changes need to be made in function
+// pigeonholeSort as well. (Yes, we're not being as DRY as we could be.)
 
 
 // pigeonholeSort
