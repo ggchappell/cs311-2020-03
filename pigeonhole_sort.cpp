@@ -26,6 +26,8 @@ using std::end;
 using std::distance;
 #include <chrono>
 // Everything from <chrono> is preceded by std::
+#include <cassert>
+// For assert
 
 
 // Size of large datasets
@@ -159,15 +161,19 @@ string intWithSep(IntType num,               // Integer to stringify
 //    Preconditions, if any, for sorting call made by doSort.
 void trySort_small()
 {
+    // Unprocessed version of dataset to sort
+    auto rawdata = { 123456, 34, 0, 56, 2, 654321, 123, 1, 0, 99 };
+
     // Initial message
     cout << "Sorting trial: Small dataset" << endl;
+    cout << "Size = " << intWithSep(rawdata.size()) << endl;
     cout << endl;
 
     // Make dataset
-    vector<int> rawdata { 123456, 34, 0, 56, 2, 654321, 123, 1, 0, 99 };
     vector<int> data;
     for (auto x : rawdata)
     {
+        assert (x >= 0);
         data.push_back(x % (1+MAXVAL));
     }
 
@@ -199,8 +205,9 @@ void trySort_small()
 void trySort_nearlySorted1()
 {
     // Initial message
-    cout << "Sorting trial: Nearly sorted type 1, size = ";
-    cout << intWithSep(BIGSIZE) << endl;
+    cout << "Sorting trial: Nearly sorted type 1"
+         << " (all items close to proper spots)" << endl;
+    cout << "Size = " << intWithSep(BIGSIZE) << endl;
     cout << endl;
 
     // Make dataset
@@ -225,8 +232,9 @@ void trySort_nearlySorted1()
 void trySort_nearlySorted2()
 {
     // Initial message
-    cout << "Sorting trial: Nearly sorted type 2, size = ";
-    cout << intWithSep(BIGSIZE) << endl;
+    cout << "Sorting trial: Nearly sorted type 2"
+         << " (few items out of order)" << endl;
+    cout << "Size = " << intWithSep(BIGSIZE) << endl;
     cout << endl;
 
     // Make dataset
@@ -254,8 +262,8 @@ void trySort_nearlySorted2()
 void trySort_messy()
 {
     // Initial message
-    cout << "Sorting trial: messy data, size = ";
-    cout << intWithSep(BIGSIZE) << endl;
+    cout << "Sorting trial: random-ish data" << endl;
+    cout << "Size = " << intWithSep(BIGSIZE) << endl;
     cout << endl;
 
     // Make dataset
