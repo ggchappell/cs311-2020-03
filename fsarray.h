@@ -1,7 +1,8 @@
 // fsarray.h  UNFINISHED
-// VERSION 2
+// VERSION 3
 // Glenn G. Chappell
-// 2020-10-14
+// Started: 2020-10-14
+// Updated: 2020-10-16
 //
 // For CS 311 Fall 2020
 // Header for class FSArray
@@ -21,12 +22,19 @@
 //   - Write (untested versions of) the following member functions:
 //     default ctor, ctor from size (these two are single func), dctor,
 //     op[], size, empty, begin, end, push_back, pop_back.
+// - v3:
+//   - Make ctor from size explicit.
+//   - Make move operations & swap noexcept.
+//   - Document exception-safety guarantees for most functions.
+//   - Write copy ctor.
 
 #ifndef FILE_FSARRAY_H_INCLUDED
 #define FILE_FSARRAY_H_INCLUDED
 
 #include <cstddef>
 // For std::size_t
+#include <algorithm>
+// For std::copy
 
 
 // *********************************************************************
@@ -60,24 +68,30 @@ public:
 public:
 
     // Default ctor & ctor from size
-    FSArray(size_type size=0)
+    // Strong Guarantee
+    explicit FSArray(size_type size=0)
         :_size(size),
-         _data(new value_type[_size])
+         _data(new value_type[size])
     {}
 
     // Copy ctor
+    // Strong Guarantee
     FSArray(const FSArray & other)
+        :_size(other.size()),
+         _data(new value_type[other.size()])
     {
-        // TODO: WRITE THIS!!!
+        std::copy(other.begin(), other.end(), begin());
     }
 
     // Move ctor
-    FSArray(FSArray && other)
+    // No-Throw Guarantee
+    FSArray(FSArray && other) noexcept
     {
         // TODO: WRITE THIS!!!
     }
 
     // Copy assignment
+    // ??? Guarantee
     FSArray & operator=(const FSArray & other)
     {
         // TODO: WRITE THIS!!!
@@ -85,13 +99,15 @@ public:
     }
 
     // Move assignment
-    FSArray & operator=(FSArray && other)
+    // No-Throw Guarantee
+    FSArray & operator=(FSArray && other) noexcept
     {
         // TODO: WRITE THIS!!!
         return *this; // DUMMY
     }
 
     // Dctor
+    // No-Throw Guarantee
     ~FSArray()
     {
         delete [] _data;
@@ -101,6 +117,7 @@ public:
 public:
 
     // operator[] - non-const & const
+    // No-Throw Guarantee
     value_type & operator[](size_type index)
     {
         return _data[index];
@@ -114,18 +131,21 @@ public:
 public:
 
     // size
+    // No-Throw Guarantee
     size_type size() const
     {
         return _size;
     }
 
     // empty
+    // No-Throw Guarantee
     bool empty() const
     {
-        return _size == 0;
+        return size() == 0;
     }
 
     // begin - non-const & const
+    // No-Throw Guarantee
     iterator begin()
     {
         return _data;
@@ -136,6 +156,7 @@ public:
     }
 
     // end - non-const & const
+    // No-Throw Guarantee
     iterator end()
     {
         return begin() + size();
@@ -146,12 +167,14 @@ public:
     }
 
     // resize
+    // ??? Guarantee
     void resize(size_type newsize)
     {
         // TODO: WRITE THIS!!!
     }
 
     // insert
+    // ??? Guarantee
     iterator insert(iterator pos,
                     const value_type & item)
     {
@@ -160,6 +183,7 @@ public:
     }
 
     // erase
+    // ??? Guarantee
     iterator erase(iterator pos)
     {
         // TODO: WRITE THIS!!!
@@ -167,19 +191,22 @@ public:
     }
 
     // push_back
+    // ??? Guarantee
     void push_back(const value_type & item)
     {
         insert(end(), item);
     }
 
     // pop_back
+    // ??? Guarantee
     void pop_back()
     {
         erase(end()-1);
     }
 
     // swap
-    void swap(FSArray & other)
+    // No-Throw Guarantee
+    void swap(FSArray & other) noexcept
     {
         // TODO: WRITE THIS!!!
     }
