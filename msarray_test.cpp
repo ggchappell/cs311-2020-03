@@ -42,6 +42,11 @@ using std::fill;
 #include <cassert>
 // For assert
 
+// Printable name for this test suite
+const std::string test_suite_name =
+    "class template MSArray"
+    " - CS 311 Proj 2, Ex A";
+
 
 // *********************************************************************
 // Helper Functions/Classes for This Test Program
@@ -1759,9 +1764,6 @@ void userPause()
 int main(int argc,
          char *argv[])
 {
-    const std::string tname = "class template MSArray"
-                              " - CS 311 Proj 2, Ex A";
-                             // Printable name for this test suite
     doctest::Context dtcontext;
                              // Primary doctest object
     int dtresult;            // doctest return code; for return by main
@@ -1774,11 +1776,9 @@ int main(int argc,
     if (!dtresult)           // Continue only if no command-line error
     {
         // Run test suites
-        std::cout << "BEGIN tests for "
-                  << tname << std::endl << std::endl;
+        cout << "BEGIN tests for " << test_suite_name << "\n" << endl;
         dtresult = dtcontext.run();
-        std::cout << "END tests for "
-                  << tname << std::endl << std::endl;
+        cout << "END tests for " << test_suite_name << "\n" << endl;
     }
 
     // If we want to do something else here, then we need to check

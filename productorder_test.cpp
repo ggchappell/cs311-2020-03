@@ -39,6 +39,11 @@ using std::size_t;
 #include <utility>
 using std::move;
 
+// Printable name for this test suite
+const std::string test_suite_name =
+    "class ProductOrder"
+    " - CS 311 Proj 1, Ex A";
+
 
 // *********************************************************************
 // Helper Functions/Classes for This Test Program
@@ -697,9 +702,6 @@ void userPause()
 int main(int argc,
          char *argv[])
 {
-    const std::string tname = "class ProductOrder"
-                              " - CS 311 Proj 1, Ex A";
-                             // Printable name for this test suite
     doctest::Context dtcontext;
                              // Primary doctest object
     int dtresult;            // doctest return code; for return by main
@@ -712,11 +714,9 @@ int main(int argc,
     if (!dtresult)           // Continue only if no command-line error
     {
         // Run test suites
-        std::cout << "BEGIN tests for "
-                  << tname << std::endl << std::endl;
+        cout << "BEGIN tests for " << test_suite_name << "\n" << endl;
         dtresult = dtcontext.run();
-        std::cout << "END tests for "
-                  << tname << std::endl << std::endl;
+        cout << "END tests for " << test_suite_name << "\n" << endl;
     }
 
     // If we want to do something else here, then we need to check
