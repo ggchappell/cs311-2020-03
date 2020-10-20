@@ -1759,8 +1759,8 @@ void userPause()
 int main(int argc,
          char *argv[])
 {
-    const std::string tname = "class ProductOrder"
-                              " - CS 311 Proj 1, Ex A";
+    const std::string tname = "class template MSArray"
+                              " - CS 311 Proj 2, Ex A";
                              // Printable name for this test suite
     doctest::Context dtcontext;
                              // Primary doctest object
