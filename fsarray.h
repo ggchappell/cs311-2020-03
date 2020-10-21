@@ -1,8 +1,8 @@
-// fsarray.h  UNFINISHED
-// VERSION 4
+// fsarray.h  INCOMPLETE
+// VERSION 5
 // Glenn G. Chappell
 // Started: 2020-10-14
-// Updated: 2020-10-19
+// Updated: 2020-10-21
 //
 // For CS 311 Fall 2020
 // Header for class FSArray
@@ -32,12 +32,18 @@
 //   - Mark various functions as noexcept.
 //   - Put definitions of copy & move functions, resize, insert, erase,
 //     swap in source file.
+// - v5:
+//   - Add _capacity data member.
+//   - Add constant DEFAULT_CAP and use it in setting the capacity in
+//     default ctor/ctor from size.
 
 #ifndef FILE_FSARRAY_H_INCLUDED
 #define FILE_FSARRAY_H_INCLUDED
 
 #include <cstddef>
 // For std::size_t
+#include <algorithm>
+// For std::max
 
 
 // *********************************************************************
@@ -49,10 +55,10 @@
 // Frightfully Smart Array of int.
 // Resizable, copyable/movable, exception-safe.
 // Invariants:
-//     _size >= 0.
+//     0 <= _size <= _capacity.
 //     _data points to an array of value_type, allocated with new [],
-//      owned by *this, holding _size value_type values -- UNLESS
-//      _size == 0, in which case _data may be nullptr.
+//      owned by *this, holding _capacity value_type values -- UNLESS
+//      _capacity == 0, in which case _data may be nullptr.
 class FSArray {
 
 // ***** FSArray: types *****
@@ -68,14 +74,22 @@ public:
     using iterator = value_type *;
     using const_iterator = const value_type *;
 
-// ***** FSArray: ctors, op=, dctor
+// ***** FSArray: internal-use constants *****
+private:
+
+    // Capacity of default-constructed object
+    enum { DEFAULT_CAP = 16 };
+
+// ***** FSArray: ctors, op=, dctor *****
 public:
 
     // Default ctor & ctor from size
     // Strong Guarantee
     explicit FSArray(size_type size=0)
-        :_size(size),
-         _data(size == 0 ? nullptr : new value_type[size])
+        :_capacity(std::max(size, size_type(DEFAULT_CAP))),
+            // _capacity must be declared before _data
+         _size(size),
+         _data(_capacity == 0 ? nullptr : new value_type[_capacity])
     {}
 
     // Copy ctor
@@ -190,8 +204,9 @@ public:
 // ***** FSArray: data members *****
 private:
 
-    size_type    _size;  // Size of our array
-    value_type * _data;  // Pointer to our array
+    size_type    _capacity;  // Size of our allocated array
+    size_type    _size;      // Size of client's data
+    value_type * _data;      // Pointer to our array
 
 };  // End class FSArray
 
