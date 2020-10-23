@@ -54,7 +54,8 @@ struct LLNode {
     LLNode & operator=(const LLNode & other) = delete;
     LLNode(LLNode && other) = delete;
     LLNode & operator=(LLNode && other) = delete;
-};
+
+};  // End struct LLNode
 
 
 #endif  //#ifndef FILE_LLNODE_H_INCLUDED
