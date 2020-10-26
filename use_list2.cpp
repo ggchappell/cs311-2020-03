@@ -1,4 +1,4 @@
-// use_list2.cpp  UNFINISHED
+// use_list2.cpp
 // Glenn G. Chappell
 // 2019-10-26
 //
@@ -13,6 +13,8 @@ using std::endl;
 using std::cin;
 #include <cstddef>
 using std::size_t;
+#include <memory>
+using std::unique_ptr;
 
 
 // userPause
@@ -28,17 +30,17 @@ void userPause()
 // Creates a Linked List and finds its size.
 int main()
 {
-    const size_t THESIZE = 507;  // Size of list to create
+    const size_t THESIZE = 800007;  // Size of list to create
 
     // Create empty list
     cout << "Creating empty Linked List" << "\n";
-    LLNode2<int> * head = nullptr;
+    unique_ptr<LLNode2<int>> head;
 
     // Add nodes to list
     cout << "Adding " << THESIZE << " nodes to Linked List" << "\n";
     for (size_t i = 0; i < THESIZE ; ++i)
     {
-        head = new LLNode2<int>(int(THESIZE-i), head);
+        push_front(head, int(THESIZE-i));
     }
     cout << endl;
 
@@ -52,9 +54,7 @@ int main()
     cout << endl;
 
     // Deallocate list
-    cout << "Deallocating list" << "\n";
-    delete head;
-    cout << endl;
+    // *** NOTHING TO DO HERE! ***
 
     // Wait for user
     cout << "Press ENTER to quit ";
