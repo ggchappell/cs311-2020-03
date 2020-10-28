@@ -2,7 +2,7 @@
 // Glenn G. Chappell
 // 2020-09-30
 //
-// For CS 311 Fall 2030
+// For CS 311 Fall 2020
 // Merge Sort (Recursive)
 
 #include <iostream>
