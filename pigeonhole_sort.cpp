@@ -18,12 +18,12 @@ using std::vector;
 using std::size_t;
 #include <utility>
 using std::swap;
-#include <algorithm>
-using std::move;
 #include <iterator>
 using std::begin;
 using std::end;
 using std::distance;
+#include <algorithm>
+using std::move;
 #include <chrono>
 // Everything from <chrono> is preceded by std::
 #include <cassert>
@@ -36,7 +36,7 @@ const size_t BIGSIZE = 100'000'000;
 // Values in datasets range from 0 to MAXVAL
 const int MAXVAL = 999;
 // *** If MAXVAL is increased, then changes need to be made in function
-// pigeonholeSort as well. (Yes, we're not being as DRY as we could be.)
+// pigeonholeSort, too. (Alas, we're not being as DRY as we could be.)
 
 
 // pigeonholeSort
@@ -165,9 +165,9 @@ void trySort_small()
     auto rawdata = { 123456, 34, 0, 56, 2, 654321, 123, 1, 0, 99 };
 
     // Initial message
-    cout << "Sorting trial: Small dataset" << endl;
-    cout << "Size = " << intWithSep(rawdata.size()) << endl;
-    cout << endl;
+    cout << "Sorting trial: Small dataset\n";
+    cout << "Size = " << intWithSep(rawdata.size()) << "\n";
+    cout << "\n";
 
     // Make dataset
     vector<int> data;
@@ -178,17 +178,17 @@ void trySort_small()
     }
 
     // Print initial data
-    cout << "  Before:" << endl;
+    cout << "  Before:\n";
     cout << "    ";
     for (const auto & val : data)
         cout << val << " ";
-    cout << endl;
+    cout << "\n";
 
     // Sort
     doSort(begin(data), end(data));
 
     // Print final data
-    cout << "  After:" << endl;
+    cout << "  After:\n";
     cout << "    ";
     for (const auto & val : data)
         cout << val << " ";
@@ -206,9 +206,9 @@ void trySort_nearlySorted1()
 {
     // Initial message
     cout << "Sorting trial: Nearly sorted type 1"
-         << " (all items close to proper spots)" << endl;
-    cout << "Size = " << intWithSep(BIGSIZE) << endl;
-    cout << endl;
+         << " (all items close to proper spots)\n";
+    cout << "Size = " << intWithSep(BIGSIZE) << "\n";
+    cout << "\n";
 
     // Make dataset
     vector<int> data(BIGSIZE);
@@ -233,9 +233,9 @@ void trySort_nearlySorted2()
 {
     // Initial message
     cout << "Sorting trial: Nearly sorted type 2"
-         << " (few items out of order)" << endl;
-    cout << "Size = " << intWithSep(BIGSIZE) << endl;
-    cout << endl;
+         << " (few items out of order)\n";
+    cout << "Size = " << intWithSep(BIGSIZE) << "\n";
+    cout << "\n";
 
     // Make dataset
     vector<int> data(BIGSIZE);
@@ -262,9 +262,9 @@ void trySort_nearlySorted2()
 void trySort_messy()
 {
     // Initial message
-    cout << "Sorting trial: random-ish data" << endl;
-    cout << "Size = " << intWithSep(BIGSIZE) << endl;
-    cout << endl;
+    cout << "Sorting trial: random-ish data\n";
+    cout << "Size = " << intWithSep(BIGSIZE) << "\n";
+    cout << "\n";
 
     // Make dataset
     vector<int> data(BIGSIZE);
@@ -297,23 +297,23 @@ int main()
     // ********** Dataset spec's **********
 
     cout << "Size of large datasets: ";
-    cout << intWithSep(BIGSIZE) << "." << endl;
-    cout << "To change this, set BIGSIZE in the source code." << endl;
+    cout << intWithSep(BIGSIZE) << ".\n";
+    cout << "To change this, set BIGSIZE in the source code.\n";
     cout << "Values in datasets range from 0 to ";
-    cout << intWithSep(MAXVAL) << "." << endl;
+    cout << intWithSep(MAXVAL) << ".\n";
 
     // ********** Sorting **********
 
-    cout << endl;
+    cout << "\n";
     trySort_small();
 
-    cout << endl;
+    cout << "\n";
     trySort_nearlySorted1();
 
-    cout << endl;
+    cout << "\n";
     trySort_nearlySorted2();
 
-    cout << endl;
+    cout << "\n";
     trySort_messy();
 
     // ********** Done **********
