@@ -94,7 +94,7 @@ bignum fibo(int n)
                                 // Top of stack holds current local vars
                                 // + spot for return value, return addr
     int tmpi;                   // Temp - holds int during stack ops
-    bignum tmpu;                // Temp - holds bignum during stack ops
+    bignum tmpb;                // Temp - holds bignum during stack ops
 
     // Set up stack frame
     cs.push(FiboStackFrame());  // Make new stack frame
@@ -126,9 +126,9 @@ bignum fibo(int n)
                 goto return_here_2;
             else                                // Back to outside world
             {
-                tmpu = cs.top().returnValue;
+                tmpb = cs.top().returnValue;
                 cs.pop();
-                return tmpu;
+                return tmpb;
             }
         }
 
@@ -143,9 +143,9 @@ bignum fibo(int n)
         cs.top().returnAddr = 1;    // Return addr: recursive call #1
         continue;                   // Do "recursive call"
 return_here_1:                      // Place to return to
-        tmpu = cs.top().returnValue;
+        tmpb = cs.top().returnValue;
         cs.pop();
-        cs.top().r1 = tmpu;         // Returned value -> r1
+        cs.top().r1 = tmpb;         // Returned value -> r1
 
         // ***************************************
         // ORIGINAL CODE:
@@ -157,9 +157,9 @@ return_here_1:                      // Place to return to
         cs.top().returnAddr = 2;    // Return addr: recursive call #2
         continue;                   // Do "recursive call"
 return_here_2:                      // Place to return to
-        tmpu = cs.top().returnValue;
+        tmpb = cs.top().returnValue;
         cs.pop();
-        cs.top().r2 = tmpu;         // Returned value -> r2
+        cs.top().r2 = tmpb;         // Returned value -> r2
 
         // ***************************************
         // ORIGINAL CODE:
@@ -173,9 +173,9 @@ return_here_2:                      // Place to return to
             goto return_here_2;
         else                                // Back to outside world
         {
-            tmpu = cs.top().returnValue;
+            tmpb = cs.top().returnValue;
             cs.pop();
-            return tmpu;
+            return tmpb;
         }
 
     // ***************************************
