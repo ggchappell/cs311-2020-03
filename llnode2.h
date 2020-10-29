@@ -30,7 +30,7 @@ template <typename ValType>
 struct LLNode2;
 
 template <typename ValType>
-void pop_front(std::unique_ptr<LLNode2<ValType>> & head);
+void pop_front(std::unique_ptr<LLNode2<ValType>> & head) noexcept;
 
 
 // *********************************************************************
@@ -96,7 +96,7 @@ struct LLNode2 {
 // functions of ValType are actually used here.
 // No-Throw Guarantee
 template <typename ValType>
-std::size_t size(const std::unique_ptr<LLNode2<ValType>> & head)
+std::size_t size(const std::unique_ptr<LLNode2<ValType>> & head) noexcept
 {
     auto p = head.get();      // Iterates through list
     std::size_t counter = 0;  // Number of nodes so far
@@ -135,10 +135,13 @@ void push_front(std::unique_ptr<LLNode2<ValType>> & head,
 // functions of ValType are actually used here.
 // No-Throw Guarantee
 template <typename ValType>
-void pop_front(std::unique_ptr<LLNode2<ValType>> & head)
+void pop_front(std::unique_ptr<LLNode2<ValType>> & head) noexcept
 {
     if (head)
-        head = move(head->_next);
+    {
+        auto tmp = std::move(head->_next);
+        head = std::move(tmp);
+    }
 }
 
 
