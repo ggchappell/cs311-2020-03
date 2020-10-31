@@ -3,7 +3,7 @@
 // 2020-10-30
 //
 // For CS 311 Fall 2020
-// Tests for Project 6 templates: test suites
+// Tests for Project 6 templates
 // For Project 6, Exercises A, B
 // Uses the "doctest" unit-testing framework, version 2
 // Requires doctest.h, dp6.h
